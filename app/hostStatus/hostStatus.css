@@ -10,8 +10,16 @@
     padding:0 15px;
 }
 
+.t td{
+    padding: 0px 75px;
+}
+
 .title {
     background-color: green;
+    font-family: 'Corben', Georgia, Times, serif;
+}
+.headers{
+    font-family: 'Corben', Georgia, Times, serif;
 }
 
 .new-row {

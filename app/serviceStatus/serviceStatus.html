@@ -10,7 +10,7 @@
 
   </tr>
   </thead>
-  <tbody>
+  <tbody class="t">
 
   <td ng-repeat="host in getList() | orderBy: 'name'">
     <img ng-src="resources/{{host.color}}.jpg" title="{{host.name}}" data="{{host.name}}" ng-click="show(host.name); hide()">
@@ -86,7 +86,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr class = "tableP" >
+      <tr class ="tableP" >
         <td >
           {{host.name}}
         </td>
@@ -103,9 +103,9 @@
 
 <div ng-show="myValue3" class="hideByDefault" >
   <h3><span class ="background">Details: {{id}}</span></h3>
-  <table ng-table-dynamic = "tableParams with cols" class="table" style ="table-layout: fixed; width: 100%">
+  <table ng-table-dynamic = "tableParams with cols" class="table" style ="table-layout: auto; width: 100%">
     <thead>
-    <tr class = "tablePadding">
+    <tr class = "tableH">
       <th>Service</th>
       <th>Status</th>
       <th>Current State</th>
