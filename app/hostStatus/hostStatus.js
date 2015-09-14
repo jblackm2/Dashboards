@@ -16,41 +16,44 @@ angular.module('myApp.hostStatus', ['ngRoute'])
 }])
 
 .controller('hostStatusCtrl', ['$scope', '$location','getHost', '$http', '$interval', function($scope, $location, getHost, $http, $interval) {
-        //$scope.host = getHost.hostStatus($http);
 
-   ////$scope.hosts = getHost.hostStatus($http);
-        //$scope.host = getHost.hostStatus($http, $scope);
-
-
-        //$http.get("http://localhost:8080/Servlet").success(function(response){$scope.host = response});
-       // var test = function(){
-            //return $http.get("http://localhost:8080/Servlet").then(function(response){
-                //return response;
-           //});
-            //return {test:test};
-
-        //};
         $http({
             url:'http://localhost:8080/Servlet',
             method: "POST",
             data: 'message=' + 'host',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function(response){$scope.host = response});
+        }).success(function(response){$scope.host = response}).catch(function(data, status){
+            $scope.param1 = data.status;
+            $scope.param2 = data.statusText;
+            if(param1 == 0){
+                $scope.param1 = 404;
+            }
+            console.log($scope.param1 + " " + "Error: " + $scope.param2);
+            $scope.go('errorStatus', $scope.param1 + " " + "Error: " +  $scope.param2);
+        });
 
         var interval = $interval(function(){$http({
             url:'http://localhost:8080/Servlet',
             method: "POST",
             data: 'message=' + 'host',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function(response){$scope.host = response;$scope.clearCount()})}, 10000);
+        }).success(function(response){$scope.host = response;$scope.clearCount()}).catch(function(data, status){
+            $scope.param1 = data.status;
+            $scope.param2 = data.statusText;
+            if($scope.param1 == 0){
+                $scope.param1 = 404;
+            }
+
+            console.log($scope.param1 + " " + "Error: " + $scope.param2);
+            $scope.go('errorStatus', $scope.param1 + " " + "Error: " +  $scope.param2);
+        });}, 10000);
         $scope.$on('$destroy',function(){
             $interval.cancel(interval);
         });
 
-        $scope.go = function(path){
-            $location.path(path);
+        $scope.go = function(path, data){
+            $location.path(path).search('param', data);
         };
-
 
     $scope.getList = function() {
         return $scope.host.Individual_lists[0].Env_list;

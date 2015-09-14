@@ -77,8 +77,8 @@
 <div ng-show="myValue2" class="hideByDefault">
   <h2><span class="background">Team Details: {{group}} </span></h2>
   <div class = "row" ng-repeat="host in getDetail1(group, env) | orderBy: 'name'"
-       ng-class="{'new-row': startNewRow($index, columnBreak) }" ng-if="host.group == group" >
-    <table ng-table-dynamic = "tableParams with cols" class="table">
+       ng-class="{'new-row': startNewRow($index, columnBreak)}" ng-if="host.group == group" >
+    <table ng-table-dynamic = "tableParams with cols" class="table" >
       <thead>
       <tr ng-init="count()" ng-if="columnCount < 4">
         <th>Name</th>
@@ -115,7 +115,7 @@
     </thead>
     <tbody>
 
-    <tr class = "tableT" ng-repeat="host in getDetail2() | orderBy: 'name'"  ng-if="host.host_name == id" ng-class="{textRed: host.current_state==2, textYellow: host.current_state==1, textGreen: host.current_state==0}">
+    <tr class = "tableT" ng-repeat="host in getDetail2()"  ng-if="host.host_name == id" ng-class="{textRed: host.current_state==2, textYellow: host.current_state==1, textGreen: host.current_state==0}">
       <td>{{host.name}}</td>
       <td>{{host.status}}</td>
       <td>{{host.current_state}}</td>

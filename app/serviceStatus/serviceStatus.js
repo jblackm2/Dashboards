@@ -11,10 +11,10 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
       $httpProvider.defaults.useXDomain = true;
       $httpProvider.defaults.withCredentials = true;
       delete $httpProvider.defaults.headers.common["X-Requested-With"];
-      $httpProvider.defaults.headers.common["Accept"] = "application/json";
+      $httpProvider.defaults.headers.common["Accept"] = "application/json, text/plain, */*";
       $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
-}])
 
+}])
 
     .controller('serviceStatusCtrl', ['$scope', 'getStatus', '$location', '$http', '$interval', function($scope, getStatus, $location, $http, $interval) {
       //$scope.status = getStatus.serviceStatus();
@@ -24,25 +24,38 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
         method: "POST",
         data: 'message=' + 'service',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      }).success(function(response){$scope.status = response});
-
-
-
+      }).success(function(response){$scope.status = response}).catch(function(data, status){
+        $scope.param1 = data.status;
+        $scope.param2 = data.statusText;
+        if(param1 == 0){
+          $scope.param1 = 404;
+        }
+        console.log($scope.param1 + " " + "Error: " + $scope.param2);
+        $scope.go('errorStatus', $scope.param1 + " " + "Error: " +  $scope.param2);
+        });
 
         var interval = $interval(function(){$http({
           url:'http://localhost:8080/Servlet',
           method: "POST",
           data: 'message=' + 'service',
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function(response){$scope.status = response; $scope.clearCount()});}, 10000);
+        }).success(function(response){$scope.status = response; $scope.clearCount()}).catch(function(data, status){
+          $scope.param1 = data.status;
+          $scope.param2 = data.statusText;
+          if($scope.param1 == 0){
+            $scope.param1 = 404;
+          }
+
+          console.log($scope.param1 + " " + "Error: " + $scope.param2);
+          $scope.go('errorStatus', $scope.param1 + " " + "Error: " +  $scope.param2);
+        });}, 10000);
         $scope.$on('$destroy',function(){
           $interval.cancel(interval);
 
         });
 
-
-      $scope.go = function(path){
-        $location.path(path);
+        $scope.go = function(path, data){
+          $location.path(path).search('param', data);
       };
 
       $scope.getList = function() {
@@ -119,7 +132,6 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
           return oldDetails;
 
         }
-
 
       }
 

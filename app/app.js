@@ -9,6 +9,7 @@ angular.module('myApp', [
   'myApp.services_service',
   'myApp.hostDetail',
   'myApp.serviceDetail',
+  'myApp.errorStatus',
   'myApp.version'
 ]).
 config(['$routeProvider',"$httpProvider", function($routeProvider, $httpProvider) {
