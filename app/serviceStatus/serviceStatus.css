@@ -1,8 +1,4 @@
 
-.tablePad th{
-    padding:0 25px;
-}
-
 .tableP td{
     padding:0 15px;
 
@@ -47,11 +43,6 @@
 .textGreen {
     color: green;
 
-}
-.label {
-    float: left;
-    text-align: left;
-    image-align: left;
 }
 
 .background{

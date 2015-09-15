@@ -24,14 +24,14 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
         method: "POST",
         data: 'message=' + 'service',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-      }).success(function(response){$scope.status = response}).catch(function(data, status){
-        $scope.param1 = data.status;
-        $scope.param2 = data.statusText;
-        if(param1 == 0){
+      }).success(function(response){$scope.status = response}).error(function(data, status){
+        $scope.param1 = data;
+        //$scope.param2 = data.statusText;
+        if($scope.param1 == null){
           $scope.param1 = 404;
         }
-        console.log($scope.param1 + " " + "Error: " + $scope.param2);
-        $scope.go('errorStatus', $scope.param1 + " " + "Error: " +  $scope.param2);
+        console.log(data + " " + "Error code: " + status);
+        $scope.go('errorStatus', $scope.param1 + " " + "Error code: " +  status);
         });
 
         var interval = $interval(function(){$http({
@@ -39,15 +39,16 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
           method: "POST",
           data: 'message=' + 'service',
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function(response){$scope.status = response; $scope.clearCount()}).catch(function(data, status){
-          $scope.param1 = data.status;
-          $scope.param2 = data.statusText;
-          if($scope.param1 == 0){
-            $scope.param1 = 404;
+        }).success(function(response){$scope.status = response; $scope.clearCount()}).error(function(data, status, config, statusText){
+          console.log("Data: " + data + " " + "Status: " + status + " C: " + config + " Text: " + statusText);
+          $scope.param1 = data;
+          //$scope.param2 = data.statusText;
+          if($scope.param1 == null){
+           $scope.param1 = 404;
           }
 
-          console.log($scope.param1 + " " + "Error: " + $scope.param2);
-          $scope.go('errorStatus', $scope.param1 + " " + "Error: " +  $scope.param2);
+          console.log(data + " " + "Error code: " + status);
+          $scope.go('errorStatus', $scope.param1 + " " + "Error code: " +  status);
         });}, 10000);
         $scope.$on('$destroy',function(){
           $interval.cancel(interval);
@@ -66,7 +67,6 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
         $scope.myValue = "true";
         console.log(environment);
         $scope.env = environment;
-
       };
 
       $scope.show2=function(name){
@@ -74,15 +74,14 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
         $scope.clearCount();
         $scope.myValue2 = "true";
         $scope.group = name;
-
       };
 
       $scope.show3=function(name){
         console.log(name);
         $scope.myValue3 = "true";
         $scope.id = name;
-
       };
+
       $scope.hide = function(){
         $scope.myValue3 = "";
       }
@@ -103,6 +102,7 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
         }
 
       }
+
       $scope.getDetail1 = function(group, env){
 
         if(env == "DIT"){
@@ -121,28 +121,33 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
       }
 
       var oldDetails = '';
+
       $scope.getDetail2 = function(){
         if($scope.status.Individual_lists[0].Details.length == 522){
           oldDetails = angular.copy($scope.status.Individual_lists[0].Details);
           console.log($scope.status.Individual_lists[0].Details.length);
           return $scope.status.Individual_lists[0].Details;
         }
+
         else{
           console.log($scope.status.Individual_lists[0].Details.length);
           return oldDetails;
-
         }
 
       }
 
       $scope.columnBreak = 3; //Max number of columns
+
       $scope.columnCount = 0;
+
       $scope.clearCount = function () {
           $scope.columnCount = 0;
       };
+
       $scope.count = function () {
         $scope.columnCount+=1;
       };
+
       $scope.startNewRow = function (index, count) {
         return ((index) % count) === 0;
       };
