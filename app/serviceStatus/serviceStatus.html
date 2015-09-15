@@ -83,8 +83,8 @@
     <tr class = "tableH">
       <th>Service</th>
       <th>Status</th>
-      <th>Current State</th>
-      <th>Check Number</th>
+      <!--th>Current State</th-->
+      <!--th>Check Number</th-->
       <th>Status update time</th>
     </tr>
     </thead>
@@ -93,8 +93,8 @@
     <tr class = "tableT" ng-repeat="host in getDetail2()"  ng-if="host.host_name == id" ng-class="{textRed: host.current_state==2, textYellow: host.current_state==1, textGreen: host.current_state==0}">
       <td>{{host.name}}</td>
       <td>{{host.status}}</td>
-      <td>{{host.current_state}}</td>
-      <td>{{host.current_check_attempt}}/{{host.max_check_attempts}}</td>
+      <!--td>{{host.current_state}}</td-->
+      <!--td>{{host.current_check_attempt}}/{{host.max_check_attempts}}</td-->
       <td>{{host.status_update_time}}</td>
     </tr>
 
