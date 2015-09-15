@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="serviceStatus/serviceStatus.css">
 
 <h1 class ="title"> Service Status: {{name}} </h1>
-<table ng-table-dynamic = "tableParams with cols" class="table">
+<table class="table">
   <thead>
   <tr>
     <th ng-repeat="host in getList()| orderBy: 'name'">
@@ -25,7 +25,7 @@
   <h1><span class="background" > Environment Details: {{env}}</span></h1>
   <div class = "row" ng-repeat="host in getDetail(env) | orderBy: 'name'"
        ng-class="{'new-row': startNewRow($index, columnBreak) }">
-  <table  ng-table-dynamic = "tableParams with cols" class="table">
+  <table class="table">
     <thead>
     <tr ng-if="$index < 3">
       <th >Name</th>
@@ -53,7 +53,7 @@
   <h2><span class="background">Team Details: {{group}} </span></h2>
   <div class = "row" ng-repeat="host in getDetail1(group, env) | orderBy: 'name'"
        ng-class="{'new-row': startNewRow($index, columnBreak)}" ng-if="host.group == group" >
-    <table ng-table-dynamic = "tableParams with cols" class="table" >
+    <table class="table" >
       <thead>
       <tr ng-init="count()" ng-if="columnCount < 4">
         <th>Name</th>
@@ -78,7 +78,7 @@
 
 <div ng-show="myValue3" class="hideByDefault" >
   <h3><span class ="background">Details: {{id}}</span></h3>
-  <table ng-table-dynamic = "tableParams with cols" class="table" style ="table-layout: auto; width: 100%">
+  <table class="table" style ="table-layout: auto; width: 100%">
     <thead>
     <tr class = "tableH">
       <th>Service</th>

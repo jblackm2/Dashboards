@@ -17,6 +17,7 @@ angular.module('myApp.hostStatus', ['ngRoute'])
 
 .controller('hostStatusCtrl', ['$scope', '$location','getHost', '$http', '$interval', function($scope, $location, getHost, $http, $interval) {
 
+        //Called once to initially populate the view with data from the servlet
         $http({
             url:'http://localhost:8080/Servlet',
             method: "POST",
@@ -32,6 +33,7 @@ angular.module('myApp.hostStatus', ['ngRoute'])
             $scope.go('errorStatus', $scope.param1 + " " + "Error code: " +  status);
         });
 
+        // Called continuously on a set interval to poll the servlet
         var interval = $interval(function(){$http({
             url:'http://localhost:8080/Servlet',
             method: "POST",
@@ -45,26 +47,27 @@ angular.module('myApp.hostStatus', ['ngRoute'])
             }
 
             $scope.go('errorStatus', $scope.param1 + " " + "Error code: " +  status);
-        });}, 10000);
-        $scope.$on('$destroy',function(){
+        });}, 10000); // Interval set in milliseconds
+
+        $scope.$on('$destroy',function(){ //Cancels the interval if the view is destroyed, stops the servlet from being overwhelmed
             $interval.cancel(interval);
         });
 
-    $scope.go = function(path, data){
+    $scope.go = function(path, data){ //Goes to the errror status page
         $location.path(path).search('param', data);
     };
 
-    $scope.getList = function() {
+    $scope.getList = function() { //Gets the data of the individual environments from the JSON object send by the servlet
         return $scope.host.Individual_lists[0].Env_list;
     };
 
-    $scope.show=function(environment){
+    $scope.show=function(environment){ //Show the individual teams for the selected environment
         console.log(environment);
         $scope.myValue = "true";
         $scope.env = environment;
     };
 
-    $scope.show2=function(name){
+    $scope.show2=function(name){ //Show the individual servers for the selected team
         console.log(name);
         $scope.clearCount();
         $scope.myValue2 = "true";
@@ -72,53 +75,49 @@ angular.module('myApp.hostStatus', ['ngRoute'])
 
     };
 
-    $scope.getDetail1 = function(name){
+    $scope.getDetail1 = function(name){ //Gets the data of individual teams specific to the previously selected environment
         if(name == "DIT"){
             var len = $scope.host.Individual_lists[0].DIT.length;
-            console.log("1" + len);
+            console.log("1: " + len);
             return $scope.host.Individual_lists[0].DIT;
         }
         else if(name == "PERF"){
             var len = $scope.host.Individual_lists[0].PERF.length;
-            console.log("2" + len);
+            console.log("2: " + len);
             return $scope.host.Individual_lists[0].PERF;
         }
         else if(name == "Stage"){
             var len = $scope.host.Individual_lists[0].Stage.length;
-            console.log("3" + len);
+            console.log("3: " + len);
             return $scope.host.Individual_lists[0].Stage;
         }
         else if(name == "PROD"){
             var len = $scope.host.Individual_lists[0].PROD.length;
-            console.log("4" + len);
+            console.log("4: " + len);
             return $scope.host.Individual_lists[0].PROD;
         }
 
     };
 
-    $scope.getDetail2 = function(group, env){
+    $scope.getDetail2 = function(group, env){ //Get data for the individual servers based on the previously selected group and environment
         if(env == "DIT"){
             var len = $scope.host.Individual_lists[0].DIT_list.length;
             console.log(len);
-            console.log($scope.host.Individual_lists[0].DIT_list);
             return $scope.host.Individual_lists[0].DIT_list;
         }
         else if(env == "PERF"){
             var len = $scope.host.Individual_lists[0].PERF_list.length;
             console.log(len);
-            console.log($scope.host.Individual_lists[0].PERF_list);
             return $scope.host.Individual_lists[0].PERF_list;
         }
         else if(env == "Stage"){
             var len = $scope.host.Individual_lists[0].Stage_list.length;
             console.log(len);
-            console.log($scope.host.Individual_lists[0].Stage_list);
             return $scope.host.Individual_lists[0].Stage_list;
         }
         else if(env == "PROD"){
             var len = $scope.host.Individual_lists[0].PROD_list.length;
             console.log(len);
-            console.log($scope.host.Individual_lists[0].PROD_list);
             return $scope.host.Individual_lists[0].PROD_list;
         }
 
@@ -139,7 +138,7 @@ angular.module('myApp.hostStatus', ['ngRoute'])
 
     $scope.columnBreak = 3; //Max number of columns
 
-    $scope.startNewRow = function (index, count) {
+    $scope.startNewRow = function (index, count) { //Used to create columns in the view
         return ((index) % count) === 0;
     };
 

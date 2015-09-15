@@ -1,10 +1,8 @@
 <link rel="stylesheet" href="hostStatus/hostStatus.css">
 
 <h1 class = "title"> Host Status:</h1>
-<!--div ng-style = "{background: 'green'}"-->
 
-
-<table ng-table-dynamic = "tableParams with cols" class="table">
+<table class="table">
     <thead>
     <tr class = "tablePadding">
         <th ng-repeat="host in getList()| orderBy: 'name'">
@@ -27,7 +25,7 @@
     <div class = "row" ng-repeat="host in getDetail1(env) | orderBy: 'name'"
          ng-class="{'new-row': startNewRow($index, columnBreak) }">
 
-    <table ng-table-dynamic = "tableParams with cols" class="table">
+    <table class="table">
         <thead>
         <tr ng-if="$index < 3">
             <th>Name</th>
@@ -55,23 +53,14 @@
     <div class = "row" ng-repeat="host in getDetail2(group, env) | orderBy: 'name'"
          ng-class="{'new-row': startNewRow($index, columnBreak) }" ng-if="host.group == group" >
 
-        <table ng-table-dynamic = "tableParams with cols" class="table">
+        <table class="table">
             <thead >
-            <!--tr ng-if="$index < 3"-->
-
-
 
                 <tr ng-init="count()">
-                    <!--Count:{{columnCount}}-->
                 <th>Name</th>
                 <th>Color</th>
                 </tr>
 
-            <!--tr ng-if="columnCount <= 3">
-                <th>Name</th>
-                <th>Color</th>
-
-            </tr-->
             </thead>
             <tbody>
             <tr class = "tableP" >

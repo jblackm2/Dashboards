@@ -19,6 +19,7 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
     .controller('serviceStatusCtrl', ['$scope', 'getStatus', '$location', '$http', '$interval', function($scope, getStatus, $location, $http, $interval) {
       //$scope.status = getStatus.serviceStatus();
 
+      //Called one time to initially populate the view with data
       $http({
         url:'http://localhost:8080/Servlet',
         method: "POST",
@@ -34,6 +35,7 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
         $scope.go('errorStatus', $scope.param1 + " " + "Error code: " +  status);
         });
 
+      //Called at a given interval to continuously poll the servlet
         var interval = $interval(function(){$http({
           url:'http://localhost:8080/Servlet',
           method: "POST",
@@ -49,44 +51,45 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
 
           console.log(data + " " + "Error code: " + status);
           $scope.go('errorStatus', $scope.param1 + " " + "Error code: " +  status);
-        });}, 10000);
-        $scope.$on('$destroy',function(){
+        });}, 10000); //Current interval in milliseconds
+
+        $scope.$on('$destroy',function(){ //Cancels the interval if the view is destroyed, stops the servlet from being overwhelmed
           $interval.cancel(interval);
 
         });
 
-        $scope.go = function(path, data){
+        $scope.go = function(path, data){  //Will go to error display page
           $location.path(path).search('param', data);
       };
 
-      $scope.getList = function() {
+      $scope.getList = function() { //Gets data for environment list
         return $scope.status.Individual_lists[0].Env_list;
       };
 
-      $scope.show=function(environment){
+      $scope.show=function(environment){ //Called to display the Environment details
         $scope.myValue = "true";
         console.log(environment);
         $scope.env = environment;
       };
 
-      $scope.show2=function(name){
+      $scope.show2=function(name){ //Called to display Team Details
         console.log(name);
         $scope.clearCount();
         $scope.myValue2 = "true";
         $scope.group = name;
       };
 
-      $scope.show3=function(name){
+      $scope.show3=function(name){// Called to display specific details about a single server
         console.log(name);
         $scope.myValue3 = "true";
         $scope.id = name;
       };
 
-      $scope.hide = function(){
+      $scope.hide = function(){ // Called to hide details for a specific server when changing the environment selected
         $scope.myValue3 = "";
-      }
+      };
 
-      $scope.getDetail = function(name){
+      $scope.getDetail = function(name){ //Getting first level of detail for individual groups within a specific environment
         //$scope.myValue = "true";
         if(name == "DIT"){
           return $scope.status.Individual_lists[0].DIT;
@@ -101,9 +104,9 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
           return $scope.status.Individual_lists[0].PROD;
         }
 
-      }
+      };
 
-      $scope.getDetail1 = function(group, env){
+      $scope.getDetail1 = function(group, env){ //Getting list of individual servers within a team subgroup of an environment(DIT:Auth:server name)
 
         if(env == "DIT"){
           return $scope.status.Individual_lists[0].DIT_list;
@@ -118,12 +121,12 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
           return $scope.status.Individual_lists[0].PROD_list;
         }
 
-      }
+      };
 
-      var oldDetails = '';
+      var oldDetails = ''; //Used to make a copy of previous page display, will show if servlet has sent only the PROD results, or everything but PROD.
 
-      $scope.getDetail2 = function(){
-        if($scope.status.Individual_lists[0].Details.length == 522){
+      $scope.getDetail2 = function(){ //Getting specific details for an individual server
+        if($scope.status.Individual_lists[0].Details.length == 522){ //522 because it is the expected length if both PROD and non-PROD details have been included. Need a better method for this.
           oldDetails = angular.copy($scope.status.Individual_lists[0].Details);
           console.log($scope.status.Individual_lists[0].Details.length);
           return $scope.status.Individual_lists[0].Details;
@@ -134,7 +137,7 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
           return oldDetails;
         }
 
-      }
+      };
 
       $scope.columnBreak = 3; //Max number of columns
 
@@ -148,7 +151,7 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
         $scope.columnCount+=1;
       };
 
-      $scope.startNewRow = function (index, count) {
+      $scope.startNewRow = function (index, count) { //Used to set column during an ng-repeat
         return ((index) % count) === 0;
       };
 
