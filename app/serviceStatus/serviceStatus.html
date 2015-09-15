@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="serviceStatus/serviceStatus.css">
 
-<h1 class ="title"> Service Status: {{name}} </h1>
+<h1 class ="title"> Service Status: {{ time | date : 'medium'}}</h1>
 <table class="table">
   <thead>
   <tr>
@@ -13,7 +13,7 @@
   <tbody class="t">
 
   <td ng-repeat="host in getList() | orderBy: 'name'">
-    <img ng-src="resources/{{host.color}}.jpg" title="{{host.name}}" data="{{host.name}}" ng-click="show(host.name); hide()">
+    <img ng-src="resources/{{host.color}}.jpg" title="{{host.name}}"  ng-click="show(host.name); hide()">
   </td>
 
   </tbody>
@@ -40,7 +40,7 @@
         {{host.name}}
       </td>
       <td>
-        <img ng-src="resources/{{host.color}}_small.jpg" title="{{host.name}}" data="{{host.name}}" ng-click="show2(host.name); hide()">
+        <img ng-src="resources/{{host.color}}_small.jpg" title="{{host.name}}" ng-click="show2(host.name); hide()">
       </td>
     </tr>
     </tbody>
@@ -66,7 +66,7 @@
           {{host.name}}
         </td>
         <td>
-          <img ng-src="resources/{{host.color}}_small.jpg" title="{{host.name}}" data="{{host.name}}" ng-click="show3(host.name)" >
+          <img ng-src="resources/{{host.color}}_small.jpg" title="{{host.name}}" ng-click="show3(host.name)" >
         </td>
       </tr>
       </tbody>

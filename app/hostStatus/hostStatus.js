@@ -58,6 +58,7 @@ angular.module('myApp.hostStatus', ['ngRoute'])
     };
 
     $scope.getList = function() { //Gets the data of the individual environments from the JSON object send by the servlet
+        $scope.time = new Date(); // Placed here because I know this will get called every 10 seconds at the latest
         return $scope.host.Individual_lists[0].Env_list;
     };
 

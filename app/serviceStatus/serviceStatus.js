@@ -63,6 +63,7 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
       };
 
       $scope.getList = function() { //Gets data for environment list
+        $scope.time = new Date(); // Placed here because I know this will get called every 10 seconds at the latest
         return $scope.status.Individual_lists[0].Env_list;
       };
 
