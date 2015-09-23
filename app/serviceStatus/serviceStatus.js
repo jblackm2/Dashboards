@@ -156,7 +156,7 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
         return ((index) % count) === 0;
       };
 
-      $scope.newWindow = function(url) {
+      $scope.newWindow = function(url) { //Opens a new window with the passed in url from the serviceStatus
         if(url != null){
           console.log(url);
           $window.open("http://"+url, '_blank');

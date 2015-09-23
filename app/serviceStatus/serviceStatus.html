@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="serviceStatus/serviceStatus.css">
 
-<h1 class ="title"> Service Status: {{ time | date : 'medium'}}</h1>
+<h1 class ="title"> Service Status: {{ time | date : 'medium'}}</h1> <!-- Displays the status of overall environments-->
 <table class="table">
   <thead>
   <tr>
@@ -21,7 +21,7 @@
 
 <h1></h1>
 
-<div ng-show="myValue" class="hideByDefault" >
+<div ng-show="myValue" class="hideByDefault" >  <!-- Displays the status of each team within a specific environment-->
   <h1><span class="background" > Environment Details: {{env}}</span></h1>
   <div class = "row" ng-repeat="host in getDetail(env) | orderBy: 'name'"
        ng-class="{'new-row': startNewRow($index, columnBreak) }">
@@ -43,16 +43,13 @@
         <img ng-src="resources/{{host.color}}_small.jpg" title="{{host.name}}" ng-click="show2(host.name); hide()">
       </td>
     </tr>
-    <!--tr class = "tableP">
-
-    </tr-->
     </tbody>
 
     </table>
   </div>
 </div>
 
-<div ng-show="myValue2" class="hideByDefault">
+<div ng-show="myValue2" class="hideByDefault">    <!-- Displays the status of individual servers within a specific team and environment-->
   <h2><span class="background">Team Details: {{group}} </span></h2>
   <div class = "row" ng-repeat="host in getDetail1(group, env) | orderBy: 'name'"
        ng-class="{'new-row': startNewRow($index, columnBreak)}" ng-if="host.group == group" >
@@ -79,7 +76,7 @@
 
 
 
-<div ng-show="myValue3" class="hideByDefault" >
+<div ng-show="myValue3" class="hideByDefault" > <!-- Displays the details of an individual server-->
   <h3><span class ="background">Details: {{id}}</span></h3>
   <table class="table" style ="table-layout: auto; width: 100%">
     <thead>

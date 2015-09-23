@@ -3,7 +3,7 @@
 }
 
 .tableP td{
-    padding:0 15px;
+    padding:0 30px;
 }
 
 .t td{
@@ -21,4 +21,5 @@
 .new-row {
     clear: left;
 }
-.row { display: inline-block; width: 33%; }
+.row { display: inline-block;
+}
