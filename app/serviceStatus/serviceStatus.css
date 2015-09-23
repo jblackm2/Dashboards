@@ -1,6 +1,6 @@
 
 .tableP td{
-    padding:0 15px;
+    padding:0 25px;
 
 }
 
@@ -56,4 +56,9 @@
 .new-row {
     clear: left;
 }
-.row { display: inline-block; width: 33%; }
+.row { display: inline-block; }
+
+.link{
+    text-decoration: underline;
+    cursor: pointer;
+}

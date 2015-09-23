@@ -16,7 +16,7 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
 
 }])
 
-    .controller('serviceStatusCtrl', ['$scope', 'getStatus', '$location', '$http', '$interval', function($scope, getStatus, $location, $http, $interval) {
+    .controller('serviceStatusCtrl', ['$scope', 'getStatus', '$location', '$http', '$interval', '$window', function($scope, getStatus, $location, $http, $interval, $window) {
       //$scope.status = getStatus.serviceStatus();
 
       //Called one time to initially populate the view with data
@@ -140,7 +140,7 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
 
       };
 
-      $scope.columnBreak = 3; //Max number of columns
+      $scope.columnBreak = 6; //Max number of columns
 
       $scope.columnCount = 0;
 
@@ -155,5 +155,13 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
       $scope.startNewRow = function (index, count) { //Used to set column during an ng-repeat
         return ((index) % count) === 0;
       };
+
+      $scope.newWindow = function(url) {
+        if(url != null){
+          console.log(url);
+          $window.open("http://"+url, '_blank');
+        }
+
+      }
 
 }]);

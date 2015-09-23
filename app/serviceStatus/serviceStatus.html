@@ -27,9 +27,9 @@
        ng-class="{'new-row': startNewRow($index, columnBreak) }">
   <table class="table">
     <thead>
-    <tr ng-if="$index < 3">
-      <th >Name</th>
-      <th>Color</th>
+    <tr ng-if="$index < 6">
+      <th>Name</th>
+      <th>Condition</th>
 
     </tr>
     </thead>
@@ -43,6 +43,9 @@
         <img ng-src="resources/{{host.color}}_small.jpg" title="{{host.name}}" ng-click="show2(host.name); hide()">
       </td>
     </tr>
+    <!--tr class = "tableP">
+
+    </tr-->
     </tbody>
 
     </table>
@@ -55,9 +58,9 @@
        ng-class="{'new-row': startNewRow($index, columnBreak)}" ng-if="host.group == group" >
     <table class="table" >
       <thead>
-      <tr ng-init="count()" ng-if="columnCount < 4">
+      <tr ng-init="count()" ng-if="columnCount < 6">
         <th>Name</th>
-        <th>Color</th>
+        <th>Condition</th>
       </tr>
       </thead>
       <tbody>
@@ -82,20 +85,22 @@
     <thead>
     <tr class = "tableH">
       <th>Service</th>
-      <th>Status</th>
+      <th>Status (clickable link if applicable)</th>
       <!--th>Current State</th-->
       <!--th>Check Number</th-->
       <th>Status update time</th>
+      <th>URL</th>
     </tr>
     </thead>
     <tbody>
 
-    <tr class = "tableT" ng-repeat="host in getDetail2()"  ng-if="host.host_name == id" ng-class="{textRed: host.current_state==2, textYellow: host.current_state==1, textGreen: host.current_state==0}">
+    <tr class = "tableT" ng-repeat="host in getDetail2()"  ng-if="host.host_name == id" ng-class="{textRed: host.current_state==2, textYellow: host.current_state==1, textGreen: host.current_state==0}" ng-click="newWindow(host.url)">
       <td>{{host.name}}</td>
-      <td>{{host.status}}</td>
+      <td ng-class ="{link: host.url != null}" title="{{host.url}}">{{host.status}}</td>
       <!--td>{{host.current_state}}</td-->
       <!--td>{{host.current_check_attempt}}/{{host.max_check_attempts}}</td-->
       <td>{{host.status_update_time}}</td>
+      <td ng-href="{{host.url}}">{{host.url}}</td>
     </tr>
 
     </tbody>
