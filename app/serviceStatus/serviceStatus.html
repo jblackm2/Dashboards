@@ -1,50 +1,46 @@
 <link rel="stylesheet" href="serviceStatus/serviceStatus.css">
 
-<h1 class ="title"> Service Status: {{ time | date : 'medium'}}</h1> <!-- Displays the status of overall environments-->
+<h1 class ="title"> Service Status: {{time | date : 'medium'}}</h1> <!-- Displays the status of overall environments-->
 <table class="table">
   <thead>
-  <tr>
-    <th ng-repeat="host in getList()| orderBy: 'name'">
-      {{host.name}}
-    </th>
-
-  </tr>
+    <tr>
+      <th ng-repeat="host in getList()| orderBy: 'name'">
+        {{host.name}}
+      </th>
+    </tr>
   </thead>
+
   <tbody class="t">
-
-  <td ng-repeat="host in getList() | orderBy: 'name'">
-    <img ng-src="resources/{{host.color}}.jpg" title="{{host.name}}"  ng-click="show(host.name); hide()">
-  </td>
-
+    <td ng-repeat="host in getList() | orderBy: 'name'">
+      <img ng-src="resources/{{host.color}}.jpg" title="{{host.name}}"  ng-click="show(host.name); hide()">
+    </td>
   </tbody>
 </table>
 
-<h1></h1>
 
 <div ng-show="myValue" class="hideByDefault" >  <!-- Displays the status of each team within a specific environment-->
   <h1><span class="background" > Environment Details: {{env}}</span></h1>
   <div class = "row" ng-repeat="host in getDetail(env) | orderBy: 'name'"
        ng-class="{'new-row': startNewRow($index, columnBreak) }">
-  <table class="table">
-    <thead>
-    <tr ng-if="$index < 6">
-      <th>Name</th>
-      <th>Condition</th>
+    <table class="table">
+      <thead>
+        <tr ng-if="$index < 6">
+          <th>Name</th>
+         <th>Condition</th>
+        </tr>
+      </thead>
 
-    </tr>
-    </thead>
-    <tbody>
-    <tr class = "tableP">
-      <td>
-        {{$index+1}}.
-        {{host.name}}
-      </td>
-      <td>
-        <img ng-src="resources/{{host.color}}_small.jpg" title="{{host.name}}" ng-click="show2(host.name); hide()">
-      </td>
-    </tr>
-    </tbody>
-
+      <tbody>
+        <tr class = "tableP">
+          <td>
+            {{$index+1}}.
+            {{host.name}}
+          </td>
+          <td>
+            <img ng-src="resources/{{host.color}}_small.jpg" title="{{host.name}}" ng-click="show2(host.name); hide()">
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </div>
@@ -55,20 +51,21 @@
        ng-class="{'new-row': startNewRow($index, columnBreak)}" ng-if="host.group == group" >
     <table class="table" >
       <thead>
-      <tr ng-init="count()" ng-if="columnCount < 6">
-        <th>Name</th>
-        <th>Condition</th>
-      </tr>
+        <tr ng-init="count()" ng-if="columnCount < 6">
+          <th>Name</th>
+          <th>Condition</th>
+        </tr>
       </thead>
+
       <tbody>
-      <tr class ="tableP" >
-        <td >
-          {{host.name}}
-        </td>
-        <td>
-          <img ng-src="resources/{{host.color}}_small.jpg" title="{{host.name}}" ng-click="show3(host.name)" >
-        </td>
-      </tr>
+        <tr class ="tableP" >
+          <td >
+            {{host.name}}
+          </td>
+          <td>
+            <img ng-src="resources/{{host.color}}_small.jpg" title="{{host.name}}" ng-click="show3(host.name)" >
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -80,25 +77,33 @@
   <h3><span class ="background">Details: {{id}}</span></h3>
   <table class="table" style ="table-layout: auto; width: 100%">
     <thead>
-    <tr class = "tableH">
-      <th>Service</th>
-      <th>Status (clickable link if applicable)</th>
-      <!--th>Current State</th-->
-      <!--th>Check Number</th-->
-      <th>Status update time</th>
-      <th>URL</th>
-    </tr>
+      <tr class = "tableH">
+        <th>Service</th>
+        <th>Status
+          <button ng-if="!expanded" ng-click="expand()">-</button>
+          <button ng-if="expanded" ng-click="expand()">+</button>
+        </th>
+        <th ng-if="!expanded">Status Details</th>
+        <!--th>Current State</th-->
+        <!--th>Check Number</th-->
+        <th>Status update time</th>
+        <th>URL</th>
+      </tr>
     </thead>
-    <tbody>
 
-    <tr class = "tableT" ng-repeat="host in getDetail2()"  ng-if="host.host_name == id" ng-class="{textRed: host.current_state==2, textYellow: host.current_state==1, textGreen: host.current_state==0}" ng-click="newWindow(host.url)">
-      <td>{{host.name}}</td>
-      <td ng-class ="{link: host.url != null}" title="{{host.url}}">{{host.status}}</td>
-      <!--td>{{host.current_state}}</td-->
-      <!--td>{{host.current_check_attempt}}/{{host.max_check_attempts}}</td-->
-      <td>{{host.status_update_time}}</td>
-      <td ng-href="{{host.url}}">{{host.url}}</td>
-    </tr>
+    <tbody>
+      <tr class = "tableT" ng-repeat="service in getDetail2()"  ng-if="service.host_name == id" ng-class="{textRed: service.current_state==2, textYellow: service.current_state==1, textGreen: service.current_state==0}" ng-click="newWindow(service.url)">
+        <td>{{service.name}}</td>
+        <!-- Show an abbreviated status-->
+        <td ng-class ="{link: service.url != null, textOk: service.current_state==0, textWarning: service.current_state==1, textCritical: service.current_state==2}" title="{{service.url}}"></td>
+        <!--Show the expanded status details if the expand button is clicked-->
+        <td ng-class ="{link: service.url != null}" title="{{service.url}}" ng-if="!expanded">{{service.status}}</td>
+        <!--td>{{host.current_state}}</td-->
+        <!--td>{{host.current_check_attempt}}/{{host.max_check_attempts}}</td-->
+        <td>{{service.status_update_time}}</td>
+        <td ng-href="{{service.url}}">{{service.url}}</td>
+
+      </tr>
 
     </tbody>
   </table>

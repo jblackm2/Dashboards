@@ -152,6 +152,18 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
         $scope.columnCount+=1;
       };
 
+      $scope.expanded = true;
+
+      $scope.expand = function(){
+        console.log($scope.expanded);
+        if($scope.expanded == false){
+          $scope.expanded = true;
+        }
+        else if($scope.expanded == true){
+          $scope.expanded = false;
+        }
+      }
+
       $scope.startNewRow = function (index, count) { //Used to set column during an ng-repeat
         return ((index) % count) === 0;
       };
