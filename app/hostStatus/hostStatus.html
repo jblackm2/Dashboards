@@ -37,7 +37,7 @@
         <tr class = "tableP" >
             <td >
                 {{$index+1}}.
-                {{host.name}}
+                {{host.name}}:
             </td>
             <td>
                 <img ng-src="resources/{{host.color}}_small.jpg" title="{{host.name}}" ng-click="show2(host.name)">
@@ -65,7 +65,7 @@
             <tbody>
             <tr class = "tableP" >
                 <td >
-                    {{host.name}}
+                    {{host.name}}:
                 </td>
                 <td>
                     <img ng-src="resources/{{host.color}}_small.jpg" title="{{host.name}}">
@@ -76,4 +76,4 @@
     </div>
 </div>
 
-<!--div ng-include src= "'hostDetail/hostDetail.html'" ng-show = true></div-->
+

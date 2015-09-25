@@ -7,8 +7,6 @@ angular.module('myApp', [
   'myApp.serviceStatus',
   'myApp.services_host',
   'myApp.services_service',
-  'myApp.hostDetail',
-  'myApp.serviceDetail',
   'myApp.errorStatus',
   'myApp.version'
 ]).
