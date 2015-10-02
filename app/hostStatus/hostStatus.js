@@ -15,11 +15,12 @@ angular.module('myApp.hostStatus', ['ngRoute'])
 
 }])
 
-.controller('hostStatusCtrl', ['$scope', '$location','getHost', '$http', '$interval', function($scope, $location, getHost, $http, $interval) {
+.controller('hostStatusCtrl', ['$scope', '$location', '$http', '$interval', function($scope, $location, $http, $interval) {
 
         //Called once to initially populate the view with data from the servlet
         $http({
-            url:'http://localhost:8080/Servlet',
+            //url:'http://localhost:8080/Servlet',
+            url:'/Servlet',
             method: "POST",
             data: 'message=' + 'host',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -35,7 +36,7 @@ angular.module('myApp.hostStatus', ['ngRoute'])
 
         // Called continuously on a set interval to poll the servlet
         var interval = $interval(function(){$http({
-            url:'http://localhost:8080/Servlet',
+            url:'/Servlet',
             method: "POST",
             data: 'message=' + 'host',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}

@@ -5,8 +5,6 @@ angular.module('myApp', [
   'ngRoute',
   'myApp.hostStatus',
   'myApp.serviceStatus',
-  'myApp.services_host',
-  'myApp.services_service',
   'myApp.errorStatus',
   'myApp.version'
 ]).

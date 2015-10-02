@@ -16,12 +16,11 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
 
 }])
 
-    .controller('serviceStatusCtrl', ['$scope', 'getStatus', '$location', '$http', '$interval', '$window', function($scope, getStatus, $location, $http, $interval, $window) {
-      //$scope.status = getStatus.serviceStatus();
+    .controller('serviceStatusCtrl', ['$scope', '$location', '$http', '$interval', '$window', function($scope, $location, $http, $interval, $window) {
 
       //Called one time to initially populate the view with data
       $http({
-        url:'http://localhost:8080/Servlet',
+        url:'/Servlet',
         method: "POST",
         data: 'message=' + 'service',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -37,7 +36,7 @@ angular.module('myApp.serviceStatus', ['ngRoute'])
 
       //Called at a given interval to continuously poll the servlet
         var interval = $interval(function(){$http({
-          url:'http://localhost:8080/Servlet',
+          url:'/Servlet',
           method: "POST",
           data: 'message=' + 'service',
           headers: {'Content-Type': 'application/x-www-form-urlencoded'}
